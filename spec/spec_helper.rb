@@ -1,5 +1,9 @@
 require "bundler/setup"
 require "well_formed"
+require "byebug"
+require "factory_bot"
+
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|file| require file }
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
