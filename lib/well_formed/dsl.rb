@@ -7,11 +7,7 @@ module WellFormed
         class_eval { delegate attribute, "#{attribute}=", to: name }
       end
       attribute_names[name] = attributes
-      # TODO: refactor the way you access a list of children so that the
-      #       initialization automatically happens on the first call for each
-      #       parent (using a method, e.g. `children_for`)
-      children[name] = []
-      children[parent] << name if parent.present?
+      children_for(parent) << name if parent.present?
     end
 
     def model_names
@@ -20,6 +16,10 @@ module WellFormed
 
     def attribute_names
       @attribute_names ||= {}
+    end
+
+    def children_for(model)
+      children[model] ||= []
     end
 
     def children
