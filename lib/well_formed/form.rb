@@ -3,7 +3,6 @@ require "active_model"
 require "well_formed/dsl"
 require "well_formed/persistance"
 require "well_formed/validations"
-require "well_formed/synchronization"
 require "well_formed/null_model"
 
 module WellFormed
@@ -13,7 +12,6 @@ module WellFormed
     extend WellFormed::DSL
     include WellFormed::Persistance
     include WellFormed::Validations
-    include WellFormed::Synchronization
 
     def initialize(*args)
       if args.first.respond_to? :id
@@ -24,8 +22,10 @@ module WellFormed
             send("#{child}=", model.send(child))
           end
         end
-        pull_attributes
       else
+        self.class.model_names.each do |model|
+          send "#{model}=", model.to_s.classify.constantize.new
+        end
         super
       end
     end

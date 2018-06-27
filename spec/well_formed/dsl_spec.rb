@@ -8,7 +8,7 @@ RSpec.describe WellFormed::DSL do
       expect(StationForm.new).to respond_to :station
     end
 
-    it "creates a attr_accessor methods for the model attributes" do
+    it "creates delegate attr_accessor methods for the model attributes" do
       form = StationForm.new
       form.name = 'Station Name'
       expect(form.name).to eq 'Station Name'

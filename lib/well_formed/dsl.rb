@@ -3,7 +3,9 @@ module WellFormed
     def model(name, attributes: [], parent: nil)
       model_names << name
       class_eval { attr_accessor name }
-      attributes.each { |attribute| class_eval { attr_accessor attribute } }
+      attributes.each do |attribute|
+        class_eval { delegate attribute, "#{attribute}=", to: name }
+      end
       attribute_names[name] = attributes
       # TODO: refactor the way you access a list of children so that the
       #       initialization automatically happens on the first call for each
