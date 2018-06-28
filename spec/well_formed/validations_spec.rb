@@ -11,5 +11,12 @@ RSpec.describe WellFormed::Validations do
 
       expect(form).to be_valid
     end
+
+    it "returns false if a model is not valid" do
+      invalid_address = build(:address, :invalid)
+      form = StationForm.new(build(:station, address: invalid_address))
+
+      expect(form).to_not be_valid
+    end
   end
 end
