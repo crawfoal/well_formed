@@ -20,7 +20,7 @@ module WellFormed
     private
 
     def models
-      self.class.model_names.map { |name| send(name) }
+      model_names.map { |name| send(name) }
     end
   end
 end
