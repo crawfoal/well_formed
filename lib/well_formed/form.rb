@@ -16,14 +16,7 @@ module WellFormed
     def initialize(*args)
       set_all_models_to_null_model
       if args.first.respond_to? :id
-        args.each do |model|
-          model_name = model.model_name.to_s.underscore
-          send("#{model_name}=", model)
-          children_for(model_name.to_sym).each do |child_name|
-            child = model.send(child_name)
-            send("#{child_name}=", child) if child.present?
-          end
-        end
+        args.each { |model| initialize_model_and_children(model) }
       else
         super
       end
@@ -34,6 +27,15 @@ module WellFormed
     def set_all_models_to_null_model
       model_names.each do |model|
         send "#{model}=", NullModel.new(attribute_names[model])
+      end
+    end
+
+    def initialize_model_and_children(model)
+      model_name = model.model_name.to_s.underscore
+      send("#{model_name}=", model)
+      children_for(model_name.to_sym).each do |child_name|
+        child = model.send(child_name)
+        send("#{child_name}=", child) if child.present?
       end
     end
   end
