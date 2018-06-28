@@ -25,13 +25,8 @@ module WellFormed
           end
         end
       else
-        # TODO: We should wait to create the model until a corresponding
-        #       attribute has been set - some forms might have optional models.
-        #       Additionally, we need to use the Null Child model as a stand in
-        #       until we truly initialize the model, otherwise we'll get no
-        #       no method errors on nil.
         self.class.model_names.each do |model|
-          send "#{model}=", model.to_s.classify.constantize.new
+          send "#{model}=", NullModel.new(self.class.attribute_names[model])
         end
         super
       end
