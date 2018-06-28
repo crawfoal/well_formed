@@ -1,4 +1,4 @@
-RSpec.describe WellFormed::Persistance do
+RSpec.describe WellFormed::Validations do
   describe "#valid?" do
     it "returns false if a validation fails" do
       form = StationForm.new

@@ -6,6 +6,12 @@ module WellFormed
       @attribute_names = attribute_names
     end
 
+    def present?
+      false
+    end
+
+    def save; end
+
     def method_missing(name, *args, &block)
       if attribute_names.include? name.to_sym
         nil
