@@ -6,8 +6,8 @@ RSpec.describe WellFormed::Persistance do
       form = StationForm.new(station)
       form.name = "Updated Station"
 
-      expect(address).to receive :save
-      expect(station).to receive :save
+      expect(address).to receive(:save!).and_call_original
+      expect(station).to receive(:save!).and_call_original
 
       form.save
     end

@@ -14,6 +14,10 @@ module WellFormed
       true
     end
 
+    def save!
+      true
+    end
+
     def save; end
 
     def method_missing(name, *args, &block)

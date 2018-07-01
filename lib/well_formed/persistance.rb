@@ -1,3 +1,5 @@
+require_relative "invalid_form"
+
 module WellFormed
   module Persistance
     def save
@@ -8,12 +10,20 @@ module WellFormed
       end
     end
 
+    def save!
+      if valid?
+        persist
+      else
+        raise InvalidForm
+      end
+    end
+
     # override this method if needed
     def persist
       if defined? ActiveRecord::Base
-        ActiveRecord::Base.transaction { models.each { |model| model.save } }
+        ActiveRecord::Base.transaction { models.all? { |model| model.save! } }
       else
-        models.each { |model| model.save }
+        models.all? { |model| model.save! }
       end
     end
 
