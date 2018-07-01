@@ -19,4 +19,15 @@ RSpec.describe WellFormed::Validations do
       expect(form).to_not be_valid
     end
   end
+
+  describe "#errors" do
+    it "includes errors from the models" do
+      invalid_coordinate_pair = build(:coordinate_pair, :invalid)
+      station = build(:station, coordinate_pair: invalid_coordinate_pair)
+      form = StationForm.new(station)
+
+      form.valid?
+      expect(form.errors).to_not be_empty
+    end
+  end
 end

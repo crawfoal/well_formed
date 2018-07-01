@@ -14,11 +14,19 @@ module WellFormed
       true
     end
 
+    def invalid?
+      !valid?
+    end
+
     def save!
       true
     end
 
     def save; end
+
+    def errors
+      []
+    end
 
     def method_missing(name, *args, &block)
       if attribute_names.include? name.to_sym

@@ -4,6 +4,10 @@ module StubbedValidation
     @validity
   end
 
+  def invalid?
+    !valid?
+  end
+
   def valid=(value)
     @validity = value
   end
