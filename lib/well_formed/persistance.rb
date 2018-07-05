@@ -30,7 +30,7 @@ module WellFormed
     private
 
     def models
-      model_names.map { |name| send(name) }
+      model_metadata.model_names.map { |name| send(name) }
     end
   end
 end

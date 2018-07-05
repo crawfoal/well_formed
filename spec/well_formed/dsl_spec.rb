@@ -1,7 +1,7 @@
 RSpec.describe WellFormed::DSL do
   describe ".model" do
     it "adds the model name to the list" do
-      expect(StationForm.model_names).to include :station
+      expect(StationForm.model_metadata.model_names).to include :station
     end
 
     it "creates a reader accessor method for the model" do

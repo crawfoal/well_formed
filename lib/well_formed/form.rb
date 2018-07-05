@@ -3,7 +3,6 @@ require "active_model"
 require "well_formed/dsl"
 require "well_formed/persistance"
 require "well_formed/validations"
-require "well_formed/null_model"
 
 module WellFormed
   class Form
@@ -25,15 +24,15 @@ module WellFormed
     private
 
     def set_all_models_to_null_model
-      model_names.each do |model|
-        send "#{model}=", NullModel.new(attribute_names[model])
+      model_metadata.model_names.each do |model|
+        send "#{model}=", NullModel.new(model_metadata.attribute_names[model])
       end
     end
 
     def initialize_model_and_children(model)
       model_name = model.model_name.to_s.underscore
       send("#{model_name}=", model)
-      children_for(model_name.to_sym).each do |child_name|
+      model_metadata.children_for(model_name.to_sym).each do |child_name|
         child = model.send(child_name)
         send("#{child_name}=", child) if child.present?
       end
